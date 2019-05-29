@@ -1,0 +1,10 @@
+0000,Comando G,900
+1111,Mazinger Z,500
+2222,Para Elisa,1200
+3333,Warner Bros,900
+4444,Ayuda al Comic,690
+5555,¡Que te den!,700
+6666,Futuro,1000
+7777,Reto,850
+8888,Basura Espacial,710
+9999,Mazinger A,935
