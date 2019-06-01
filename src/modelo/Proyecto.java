@@ -24,6 +24,13 @@ public class Proyecto {
 		this.horas = horas;
 	}
 	
+	/**
+	 * @param campos Se le pasa un array con todos los atributos necesarios
+	 */
+	public Proyecto(String[] campos) {
+		this(campos[0], campos[1], Integer.parseInt(campos[2]));
+	}
+	
 	public String getId() {
 		return id;
 	}

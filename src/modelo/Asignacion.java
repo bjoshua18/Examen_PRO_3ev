@@ -20,6 +20,13 @@ public class Asignacion {
 		this.cientifico = cientifico;
 		this.proyecto = proyecto;
 	}
+	
+	/**
+	 * @param campos Se le pasa un array con todos los atributos necesarios
+	 */
+	public Asignacion(String[] campos) {
+		this(campos[0], campos[1]);
+	}
 
 	public String getCientifico() {
 		return cientifico;

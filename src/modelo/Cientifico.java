@@ -20,6 +20,13 @@ public class Cientifico {
 		this.dni = dni;
 		this.nombre = nombre;
 	}
+	
+	/**
+	 * @param campos Se le pasa un array con todos los atributos necesarios
+	 */
+	public Cientifico(String[] campos) {
+		this(campos[0], campos[1]);
+	}
 
 	public String getDni() {
 		return dni;
