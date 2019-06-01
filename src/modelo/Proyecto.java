@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import control.LecturaEscritura;
 import modelo.dao.AccesoDatos;
@@ -116,5 +117,19 @@ public class Proyecto {
 		ArrayList<String[]> lista = LecturaEscritura.getRegistersFromFile(ruta, separador);
 		ArrayList<Proyecto> proyectos = getProyectosFromList(lista);
 		return proyectos;
+	}
+	
+	/**
+	 * <p>Obtener un mapa de tipo {@code HashMap<String, Proyecto>} de una lista de {@code ArrayList<String[]>}</p>
+	 * @param lista La lista que contiene los registros
+	 * @return El mapa con todos los objetos {@code Proyecto}
+	 * */
+	public static HashMap<String, Proyecto> getMapProyectosFromList(ArrayList<String[]> lista) {
+		HashMap<String, Proyecto> mapa = new HashMap<String, Proyecto>();
+		lista.forEach(registro -> {
+			Proyecto proyecto = new Proyecto(registro);
+			mapa.put(proyecto.getId(), proyecto);
+		});
+		return mapa;
 	}
 }

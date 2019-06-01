@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import control.LecturaEscritura;
 import modelo.dao.AccesoDatos;
@@ -109,5 +110,19 @@ public class Cientifico {
 		ArrayList<String[]> lista = LecturaEscritura.getRegistersFromFile(ruta, separador);
 		ArrayList<Cientifico> cientificos = getCientificosFromList(lista);
 		return cientificos;
+	}
+	
+	/**
+	 * <p>Obtener un mapa de tipo {@code HashMap<String, Cientifico>} de una lista de {@code ArrayList<String[]>}</p>
+	 * @param lista La lista que contiene los registros
+	 * @return El mapa con todos los objetos {@code Cientifico}
+	 * */
+	public static HashMap<String, Cientifico> getMapCientificosFromList(ArrayList<String[]> lista) {
+		HashMap<String, Cientifico> mapa = new HashMap<String, Cientifico>();
+		lista.forEach(registro -> {
+			Cientifico cientifico = new Cientifico(registro);
+			mapa.put(cientifico.getDni(), cientifico);
+		});
+		return mapa;
 	}
 }
