@@ -83,4 +83,38 @@ public class Proyecto {
 			System.out.println("SQLException al insertar datos.");
 		}
 	}
+	
+	/**
+	 * <p>Obtener una lista de objetos {@code Proyecto} de una lista de {@code ArrayList<String[]>}</p>
+	 * @param lista La lista que contiene los registros de los proyectos
+	 * @return La lista con todos los objetos {@code Proyecto}
+	 * */
+	public static ArrayList<Proyecto> getProyectosFromList(ArrayList<String[]> lista) {
+		ArrayList<Proyecto> proyectos = new ArrayList<Proyecto>();
+		lista.forEach(registro -> proyectos.add(new Proyecto(registro)));
+		return proyectos;
+	}
+	
+	/**
+	 * <p>Obtener una lista de tipo {@code Proyecto} dado el nombre de una tabla</p>
+	 * @param tabla El nombre de la tabla que contiene los datos
+	 * @return La lista con todos los objetos {@code Proyecto}
+	 * */
+	public static ArrayList<Proyecto> getProyectosFromTable(String tabla) {
+		ArrayList<String[]> lista = AccesoDatos.getListFromTable(tabla);
+		ArrayList<Proyecto> proyectos = getProyectosFromList(lista);
+		return proyectos;
+	}
+	
+	/**
+	 * <p>Obtener una lista de tipo {@code Proyecto} dada la ruta de un fichero y un separador</p>
+	 * @param ruta La ruta del fichero que contiene los datos
+	 * @param separador Una cadena que representa el separador entre los datos de un mismo registro en el fichero
+	 * @return La lista con todos los objetos {@code Proyecto}
+	 * */
+	public static ArrayList<Proyecto> getProyectosFromFile(String ruta, String separador) {
+		ArrayList<String[]> lista = LecturaEscritura.getRegistersFromFile(ruta, separador);
+		ArrayList<Proyecto> proyectos = getProyectosFromList(lista);
+		return proyectos;
+	}
 }
