@@ -1,6 +1,11 @@
 package modelo.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import control.BaseDatos;
 
@@ -8,6 +13,49 @@ public class AccesoDatos {
 
 	private static Connection conexion;
 	private static BaseDatos bd;
+
+	/**
+	 * <h2>Obtener Lista desde una Tabla</h2>
+	 * <p>Obtiene un {@code ArrayList<String[]} con todos los registros de una tabla dada</p>
+	 * @param conexion La conexión con la base de datos
+	 * @param tabla El nombre de la tabla
+	 * @return El {@code ArrayList<String[]>} con todos los registros de la tabla
+	 * */
+	public static ArrayList<String[]> getListFromTable(String tabla) {
+		ArrayList<String[]> lista = new ArrayList<String[]>();
+		
+		try {
+			ResultSet rS = selectAllFromTable(tabla);
+			ResultSetMetaData mD = rS.getMetaData();
+			
+			while (rS.next()) {
+				String[] registro = new String[mD.getColumnCount()];
+				for (int i = 0; i < registro.length; i++)
+					registro[i] = rS.getString(i + 1);
+				lista.add(registro);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Algo falla con SQL...");
+		} catch (NullPointerException e) {
+			System.out.println("Ha ocurrido el típico NullPointerException...");
+		}
+		
+		return lista;
+	}
+	
+	/**
+	 * <h2>Obtener ResultSet de una Tabla</h2>
+	 * <p>Obtiene el {@code ResultSet} de una query tipo SELECT a una tabla dada</p>
+	 * @param conexion La conexión con la base de datos
+	 * @param tabla El nombre de la tabla
+	 * @return El {@code ResultSet} de la query
+	 * */
+	private static ResultSet selectAllFromTable(String tabla) throws SQLException {
+		String sql = "SELECT * FROM " + tabla;
+		PreparedStatement pstmt = conexion.prepareStatement(sql);
+		return pstmt.executeQuery();
+	}
 	
 	/**
 	 * @param host Es el host donde está la DB que te quieres conectar
