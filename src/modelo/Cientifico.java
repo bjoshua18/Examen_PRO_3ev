@@ -76,4 +76,38 @@ public class Cientifico {
 			System.out.println("SQLException al insertar datos.");
 		}
 	}
+	
+	/**
+	 * <p>Obtener una lista de objetos {@code Cientifico} de una lista de {@code ArrayList<String[]>}</p>
+	 * @param lista La lista que contiene los registros de los científicos
+	 * @return La lista con todos los objetos {@code Cientifico}
+	 * */
+	public static ArrayList<Cientifico> getCientificosFromList(ArrayList<String[]> lista) {
+		ArrayList<Cientifico> cientificos = new ArrayList<Cientifico>();
+		lista.forEach(registro -> cientificos.add(new Cientifico(registro)));
+		return cientificos;
+	}
+	
+	/**
+	 * <p>Obtener una lista de tipo {@code Cientifico} dado el nombre de una tabla</p>
+	 * @param tabla El nombre de la tabla que contiene los datos
+	 * @return La lista con todos los objetos {@code Cientifico}
+	 * */
+	public static ArrayList<Cientifico> getCientificosFromTable(String tabla) {
+		ArrayList<String[]> lista = AccesoDatos.getListFromTable(tabla);
+		ArrayList<Cientifico> cientificos = getCientificosFromList(lista);
+		return cientificos;
+	}
+	
+	/**
+	 * <p>Obtener una lista de tipo {@code Cientifico} dada la ruta de un fichero y un separador</p>
+	 * @param ruta La ruta del fichero que contiene los datos
+	 * @param separador Una cadena que representa el separador entre los datos de un mismo registro en el fichero
+	 * @return La lista con todos los objetos {@code Cientifico}
+	 * */
+	public static ArrayList<Cientifico> getCientificosFromFile(String ruta, String separador) {
+		ArrayList<String[]> lista = LecturaEscritura.getRegistersFromFile(ruta, separador);
+		ArrayList<Cientifico> cientificos = getCientificosFromList(lista);
+		return cientificos;
+	}
 }
