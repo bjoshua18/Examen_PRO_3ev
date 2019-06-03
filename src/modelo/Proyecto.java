@@ -132,4 +132,8 @@ public class Proyecto {
 		});
 		return mapa;
 	}
+	
+	public String toString() {
+		return this.getNombre();
+	}
 }

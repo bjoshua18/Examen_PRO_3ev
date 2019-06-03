@@ -125,4 +125,8 @@ public class Cientifico {
 		});
 		return mapa;
 	}
+	
+	public String toString() {
+		return this.getNombre();
+	}
 }

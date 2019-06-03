@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import control.BaseDatos;
+import modelo.Cientifico;
+import modelo.Proyecto;
 
 public class AccesoDatos {
 
@@ -81,5 +83,57 @@ public class AccesoDatos {
 	 * */
 	public static void closeConnection() {
 		bd.closeConnection();
+	}
+	
+	public static ArrayList<Proyecto> getProyectosFromCientifico(String dniCient) {
+		ArrayList<Proyecto> proyectos = new ArrayList<Proyecto>();
+		String sql = "SELECT * FROM proyectos AS p INNER JOIN asignaciones AS a ON a.proyecto = p.id "
+				+ "WHERE a.cientifico like \"" + dniCient + "\"";
+		try {
+			ResultSet rS = getResultSet(sql);
+			ResultSetMetaData mD = rS.getMetaData();
+			
+			while (rS.next()) {
+				String[] registro = new String[mD.getColumnCount()];
+				for (int i = 0; i < registro.length; i++)
+					registro[i] = rS.getString(i + 1);
+				proyectos.add(new Proyecto(registro));
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Algo falla con SQL...");
+		} catch (NullPointerException e) {
+			System.out.println("Ha ocurrido el típico NullPointerException...");
+		}
+		
+		return proyectos;
+	}
+
+	public static ArrayList<Cientifico> getCientificosFromProyecto(String idProyecto) {
+		ArrayList<Cientifico> cientificos = new ArrayList<Cientifico>();
+		String sql = "SELECT * FROM cientificos AS c INNER JOIN asignaciones AS a ON a.cientifico = c.dni "
+				+ "WHERE a.proyecto like \"" + idProyecto + "\"";
+		try {
+			ResultSet rS = getResultSet(sql);
+			ResultSetMetaData mD = rS.getMetaData();
+			
+			while (rS.next()) {
+				String[] registro = new String[mD.getColumnCount()];
+				for (int i = 0; i < registro.length; i++)
+					registro[i] = rS.getString(i + 1);
+				cientificos.add(new Cientifico(registro));
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Algo falla con SQL...");
+		} catch (NullPointerException e) {
+			System.out.println("Ha ocurrido el típico NullPointerException...");
+		}
+		return cientificos;
+	}
+
+	private static ResultSet getResultSet(String sql) throws SQLException {
+		PreparedStatement pstmt = conexion.prepareStatement(sql);
+		return pstmt.executeQuery();
 	}
 }
